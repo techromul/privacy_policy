@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WindowShopper - Product</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial Black', Arial, sans-serif;
+            background: #e8e8e8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px auto;
+        }
+        
+        .title {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+        
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-decoration: none;
+            color: white;
+            background: black;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
+            background: #333;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: black;
+            border: 2px solid black;
+        }
+        
+        .btn-secondary:hover {
+            background: black;
+            color: white;
+        }
+        
+        .footer {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="logo.png" alt="WindowShopper" class="logo">
+        
+        <h1 class="title">WindowShopper</h1>
+        
+        <p class="message">
+            Open this product in the WindowShopper app for the best experience!
+        </p>
+        
+        <div class="buttons">
+            <a href="#" id="openApp" class="btn">OPEN IN APP</a>
+            <a href="https://play.google.com/store/apps/details?id=com.windowshopper.smartshopping" class="btn btn-secondary">DOWNLOAD APP</a>
+        </div>
+        
+        <p class="footer">
+            If the app doesn't open automatically, you can download it from the Google Play Store.
+        </p>
+    </div>
+
+    <script>
+        // Get product ID from URL path
+        const pathParts = window.location.pathname.split('/');
+        const productId = pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2];
+        const urlParams = new URLSearchParams(window.location.search);
+        const ref = urlParams.get('ref');
+        
+        // Build deep link
+        let deepLink = `windowshopper://product/${productId}`;
+        if (ref) {
+            deepLink += `?ref=${ref}`;
+        }
+        
+        // Set up app opening
+        document.getElementById('openApp').href = deepLink;
+        
+        // Try to open app automatically on mobile
+        if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            setTimeout(() => {
+                window.location.href = deepLink;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
